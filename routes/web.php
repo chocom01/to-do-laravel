@@ -1,18 +1,17 @@
 <?php
 
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/{orderBy?}/{sortBy?}', [TaskController::class, 'index'])
+    ->where([
+        'orderBy' => '(name|user_id|status_id|priority_id)',
+        'sortBy' => '(asc|desc)'
+    ]);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/tasks/{task:id}', [TaskController::class, 'edit']);
+Route::get('/tasks', [TaskController::class, 'create']);
+
+Route::post('/tasks', [TaskController::class, 'store']);
+Route::patch('/tasks/{task:id}', [TaskController::class, 'update']);
+Route::delete('/tasks/{task:id}', [TaskController::class, 'destroy']);
