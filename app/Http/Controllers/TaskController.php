@@ -20,7 +20,7 @@ class TaskController extends Controller
 
     public function create()
     {
-        return view('tasks.create', ['dropdownData' => [
+        return view('tasks.create', ['taskDependencies' => (object) [
             'user' => User::all(),
             'status' => Status::all(),
             'priority' => Priority::all()
