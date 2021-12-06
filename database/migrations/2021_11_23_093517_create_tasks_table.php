@@ -20,6 +20,7 @@ class CreateTasksTable extends Migration
             $table->foreignId('status_id');
             $table->foreignId('priority_id');
             $table->timestamps();
+            $table->index('name');
         });
     }
 
