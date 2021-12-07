@@ -10,5 +10,10 @@
             <x-task.form-properties :task="$task" > </x-task.form-properties>
             <input type="submit" value="Update">
         </form>
+        <form method="POST" action="/tasks/{{ $task->id }}">
+            @csrf
+            @method('DELETE')
+            <input type="submit" value="Delete">
+        </form>
     </div>
 </x-layout>

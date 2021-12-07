@@ -39,6 +39,13 @@ class TaskController extends Controller
         return back();
     }
 
+    public function destroy(Task $task)
+    {
+        $task->delete();
+
+        return redirect('/tasks');
+    }
+
     protected function validateTask(): array
     {
         return request()->validate([
