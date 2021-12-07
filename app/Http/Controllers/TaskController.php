@@ -26,6 +26,19 @@ class TaskController extends Controller
         return redirect('/tasks');
     }
 
+    public function edit(Task $task)
+    {
+        return view('tasks.edit', ['task' => $task]);
+    }
+
+    public function update(Task $task)
+    {
+        $attributes = $this->validateTask();
+        $task->update($attributes);
+
+        return back();
+    }
+
     protected function validateTask(): array
     {
         return request()->validate([
