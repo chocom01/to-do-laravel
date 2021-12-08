@@ -11,7 +11,7 @@
     </style>
 
     <div class="topnav">
-        <a href="/tasks">Home</a>
+        <a href="/?perPage=10">Home</a>
         <a href="/tasks">Create task</a>
     </div>
 </nav>
