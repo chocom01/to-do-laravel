@@ -18,6 +18,11 @@ class Task extends Model
 
     protected $with = ['user', 'status', 'priority'];
 
+    public function scopeFilter($query)
+    {
+        $query->orderBy(request('orderBy') ?? 'name', request('sortBy') ?? 'asc');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
