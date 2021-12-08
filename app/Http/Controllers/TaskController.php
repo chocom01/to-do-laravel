@@ -31,7 +31,7 @@ class TaskController extends Controller
     {
         Task::create($this->validateTask());
 
-        return redirect('/');
+        return redirect()->home();
     }
 
     public function edit(Task $task)
@@ -51,7 +51,7 @@ class TaskController extends Controller
     {
         $task->delete();
 
-        return redirect('/');
+        return redirect()->home();
     }
 
     protected function validateTask(): array
