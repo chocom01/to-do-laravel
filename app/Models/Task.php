@@ -16,6 +16,8 @@ class Task extends Model
         'priority_id'
     ];
 
+    protected $with = ['user', 'status', 'priority'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
