@@ -10,6 +10,14 @@ use Illuminate\Validation\Rule;
 
 class TaskController extends Controller
 {
+    public function index()
+    {
+        return view('tasks.index', [
+            'tasks' => Task::paginate(request('perPage') ?? 10)->withQueryString(),
+            'perPage' => [10, 25, 50]
+        ]);
+    }
+
     public function create()
     {
         return view('tasks.create', ['taskDependencies' => (object) [
@@ -23,7 +31,7 @@ class TaskController extends Controller
     {
         Task::create($this->validateTask());
 
-        return redirect('/tasks');
+        return redirect('/');
     }
 
     public function edit(Task $task)
@@ -43,7 +51,7 @@ class TaskController extends Controller
     {
         $task->delete();
 
-        return redirect('/tasks');
+        return redirect('/');
     }
 
     protected function validateTask(): array

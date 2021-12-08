@@ -1,0 +1,40 @@
+<x-layout>
+    <style>
+        <?php include '../resources/css/tasks.index.css'; ?>
+    </style>
+
+    <div class="mx-72 p-7">
+        <p class="text-3xl mt-3 mb-6 flex justify-center"> Tasks </p>
+        <table class="table-fixed">
+            <tr>
+                <th class="w-3/6"> Name </th>
+                <th class="w-1/6"> User </th>
+                <th class="w-1/6"> Status </th>
+                <th class="w-2/6"> Priority </th>
+                <th>Edit</th>
+            </tr>
+            @foreach ($tasks as $task)
+                <tr>
+                    <td> {{ $task->name }} </td>
+                    <td> {{ $task->user->name }} </td>
+                    <td> {{ $task->status->name }} </td>
+                    <td> {{ $task->priority->name }} </td>
+                    <td> <a class="button" href="/tasks/{{ $task->id }}"> Edit </a> </td>
+                </tr>
+            @endforeach
+        </table>
+
+        <div class="flex items-center sm:justify-between">
+            <div class="pagination">
+                <p class="mt-5 mb-3 text-center"> Items on page </p>
+                @foreach ($perPage as $limit)
+                    <a class="{{ ($limit == request('perPage') ? 'active' : '') }}"
+                       href="{{ request()->fullUrlWithQuery(['perPage' => $limit, 'page' => 1]) }}" >
+                        {{ $limit }}
+                    </a>
+                @endforeach
+            </div>
+            <div class="mt-7"> {{ $tasks->links() }} </div>
+        </div>
+    </div>
+</x-layout>
