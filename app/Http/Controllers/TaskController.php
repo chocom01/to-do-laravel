@@ -13,7 +13,7 @@ class TaskController extends Controller
     public function index()
     {
         return view('tasks.index', [
-            'tasks' => Task::paginate(request('perPage') ?? 10)->withQueryString(),
+            'tasks' => Task::filter()->paginate(request('perPage') ?? 10)->withQueryString(),
             'perPage' => [10, 25, 50]
         ]);
     }
@@ -31,7 +31,7 @@ class TaskController extends Controller
     {
         Task::create($this->validateTask());
 
-        return redirect('/');
+        return redirect()->home();
     }
 
     public function edit(Task $task)
@@ -51,7 +51,7 @@ class TaskController extends Controller
     {
         $task->delete();
 
-        return redirect('/');
+        return redirect()->home();
     }
 
     protected function validateTask(): array

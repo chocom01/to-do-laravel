@@ -7,10 +7,10 @@
         <p class="text-3xl mt-3 mb-6 flex justify-center"> Tasks </p>
         <table class="table-fixed">
             <tr>
-                <th class="w-3/6"> Name </th>
-                <th class="w-1/6"> User </th>
-                <th class="w-1/6"> Status </th>
-                <th class="w-2/6"> Priority </th>
+                <x-task.th-arrow class="w-3/6" :orderBy="'name'"> Name </x-task.th-arrow>
+                <x-task.th-arrow class="w-1/6" :orderBy="'user_id'"> User </x-task.th-arrow>
+                <x-task.th-arrow class="w-1/6" :orderBy="'status_id'"> Status </x-task.th-arrow>
+                <x-task.th-arrow class="w-2/6" :orderBy="'priority_id'"> Priority </x-task.th-arrow>
                 <th>Edit</th>
             </tr>
             @foreach ($tasks as $task)
@@ -28,7 +28,7 @@
             <div class="pagination">
                 <p class="mt-5 mb-3 text-center"> Items on page </p>
                 @foreach ($perPage as $limit)
-                    <a class="{{ ($limit == request('perPage') ? 'active' : '') }}"
+                    <a class="{{ ($limit == (request('perPage') ?? 10) ? 'active' : '') }}"
                        href="{{ request()->fullUrlWithQuery(['perPage' => $limit, 'page' => 1]) }}" >
                         {{ $limit }}
                     </a>
