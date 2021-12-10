@@ -2,23 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QueryStringRequest;
+use App\Http\Requests\TaskValidationRequest;
 use App\Models\Priority;
 use App\Models\Status;
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index(QueryStringRequest $request): View
     {
+        $validated = $request->validated();
+
         return view('tasks.index', [
-            'tasks' => Task::filter()->paginate(request('perPage') ?? 10)->withQueryString(),
+            'tasks' => Task::filter($validated)
+                ->paginate($validated['perPage'] ?? 10)
+                ->withQueryString(),
             'perPage' => [10, 25, 50]
         ]);
     }
 
-    public function create()
+    public function create(): View
     {
         return view('tasks.create', ['taskDependencies' => (object) [
             'user' => User::all(),
@@ -27,40 +35,29 @@ class TaskController extends Controller
         ]]);
     }
 
-    public function store()
+    public function store(TaskValidationRequest $request): RedirectResponse
     {
-        Task::create($this->validateTask());
+        Task::create($request->validated());
 
         return redirect()->home();
     }
 
-    public function edit(Task $task)
+    public function edit(Task $task): View
     {
         return view('tasks.edit', ['task' => $task]);
     }
 
-    public function update(Task $task)
+    public function update(Task $task, TaskValidationRequest $request): RedirectResponse
     {
-        $attributes = $this->validateTask();
-        $task->update($attributes);
+        $task->update($request->validated());
 
         return back();
     }
 
-    public function destroy(Task $task)
+    public function destroy(Task $task): RedirectResponse
     {
         $task->delete();
 
         return redirect()->home();
-    }
-
-    protected function validateTask(): array
-    {
-        return request()->validate([
-            'name' => 'required|max:255',
-            'user_id' => ['required', Rule::exists('users', 'id')],
-            'status_id' => ['required', Rule::exists('statuses', 'id')],
-            'priority_id' => ['required', Rule::exists('priorities', 'id')]
-        ]);
     }
 }
