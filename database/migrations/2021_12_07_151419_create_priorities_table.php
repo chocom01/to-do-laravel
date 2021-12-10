@@ -17,7 +17,6 @@ class CreatePrioritiesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->timestamps();
             $table->index('name');
         });
     }
