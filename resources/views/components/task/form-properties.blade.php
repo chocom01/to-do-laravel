@@ -6,13 +6,13 @@
 </label>
 
 <label> Assign to
-    <x-task.selector :task="$task ?? $taskDependencies" :table="'user'" :column="'user_id'"></x-task.selector>
+    <x-task.selector :object="$task ?? $taskDependencies" :table="'user'" :column="'user_id'"></x-task.selector>
 </label>
 
 <label> Status
-    <x-task.selector :task="$task ?? $taskDependencies" :table="'status'" :column="'status_id'"></x-task.selector>
+    <x-task.selector :object="$task ?? $taskDependencies" :table="'status'" :column="'status_id'"></x-task.selector>
 </label>
 
 <label> Priority
-    <x-task.selector :task="$task ?? $taskDependencies" :table="'priority'" :column="'priority_id'"></x-task.selector>
+    <x-task.selector :object="$task ?? $taskDependencies" :table="'priority'" :column="'priority_id'"></x-task.selector>
 </label>
