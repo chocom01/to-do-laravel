@@ -1,7 +1,6 @@
 <x-layout>
-    <style>
-        <?php include '../resources/css/form.css'; ?>
-    </style>
+    <link href="{{ asset('/css/form.css') }}" rel="stylesheet">
+
     <div class="center">
         <p class="text-2xl mb-6 flex justify-center"> Edit tasks </p>
         <form method="POST" action="/tasks/{{ $task->id }}">

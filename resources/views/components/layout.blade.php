@@ -4,15 +4,12 @@
 
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="{{ asset('/css/nav.css') }}" rel="stylesheet">
 
 <nav>
-    <style>
-        <?php include '/home/chocom01/project/to-do-laravel/resources/css/nav.css'; ?>
-    </style>
-
     <div class="topnav">
-        <a href="/">Home</a>
-        <a href="/tasks">Create task</a>
+        <a href="/tasks">Home</a>
+        <a href="/tasks/create">Create task</a>
     </div>
 </nav>
     {{$slot}}
