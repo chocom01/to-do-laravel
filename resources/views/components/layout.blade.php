@@ -8,8 +8,8 @@
 
 <nav>
     <div class="topnav">
-        <a href="/tasks">Home</a>
-        <a href="/tasks/create">Create task</a>
+        <a class="{{ (Route::current()->uri() == 'tasks') ? 'active' : '' }}" href="/tasks">Home</a>
+        <a class="{{ (Route::current()->uri() == 'tasks/create') ? 'active' : '' }}" href="/tasks/create">Create task</a>
     </div>
 </nav>
     {{$slot}}
