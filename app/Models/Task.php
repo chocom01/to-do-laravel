@@ -19,7 +19,7 @@ class Task extends Model
 
     protected $with = ['user', 'status', 'priority'];
 
-    public function scopeFilter($query, $validated)
+    public function scopeFilter(object $query, array $validated)
     {
         $query->orderBy($validated['orderBy'] ?? 'name', $validated['sortBy'] ?? 'asc');
     }
