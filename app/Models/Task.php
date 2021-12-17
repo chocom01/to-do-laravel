@@ -21,7 +21,7 @@ class Task extends Model
 
     public function scopeFilter(object $query, array $validated)
     {
-        $query->orderBy($validated['orderBy'] ?? 'name', $validated['sortBy'] ?? 'asc');
+        $query->orderBy($validated['orderBy'] ?? 'name', $validated['sortBy'] ?? 'asc')->orderBy('id', 'asc');
     }
 
     public function user(): BelongsTo
