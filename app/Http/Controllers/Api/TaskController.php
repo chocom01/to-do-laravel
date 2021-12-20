@@ -8,30 +8,25 @@ use App\Http\Requests\TaskValidationRequest;
 use App\Http\Resources\TaskResource;
 use App\Mail\AssignedTaskMail;
 use App\Models\Task;
+use App\Services\TaskService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
-    public function index(QueryStringRequest $request): Response | Application | ResponseFactory
+    public function index(TaskService $service, QueryStringRequest $request): JsonResponse
     {
-        $validated = $request->validated();
+        $data = $service->index($request);
 
-        $tasks = Task::filter($validated)
-            ->paginate($validated['perPage'] ?? 10)
-            ->withQueryString();
-
-        return response(TaskResource::collection($tasks), 200);
+        return (TaskResource::collection($data['tasks']))->response($data['perPage']);
     }
 
-    public function store(TaskValidationRequest $request): object
+    public function store(TaskService $service, TaskValidationRequest $request): object
     {
-        $task = new Task($request->validated());
-        $task->save();
-
-        Mail::to($task->user->email)->send(new AssignedTaskMail($task));
+        $service->store($request);
 
         return response('Task successfully created', 201);
     }
@@ -41,15 +36,17 @@ class TaskController extends Controller
         return new TaskResource($task);
     }
 
-    public function update(Task $task, TaskValidationRequest $request): Response | Application | ResponseFactory
+    public function update(Task $task, TaskValidationRequest $request): Response
     {
         $task->update($request->validated());
+
         return response($task, 200);
     }
 
-    public function destroy(Task $task): Response | Application | ResponseFactory
+    public function destroy(Task $task): Response
     {
         $task->delete();
+
         return response('Task was deleted', 204);
     }
 }
