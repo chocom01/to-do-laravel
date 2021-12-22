@@ -6,6 +6,7 @@ use App\Http\Requests\QueryStringRequest;
 use App\Http\Requests\TaskValidationRequest;
 use App\Mail\AssignedTaskMail;
 use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class TaskService
@@ -15,7 +16,7 @@ class TaskService
         $validated = $request->validated();
 
         return [
-            'tasks' => Task::filter($validated)
+            'tasks' => Auth::user()->tasks()->filter($validated)
                 ->paginate($validated['perPage'] ?? 10)
                 ->withQueryString(),
             'perPage' => [10, 25, 50]
