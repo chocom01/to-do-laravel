@@ -5,19 +5,22 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\QueryStringRequest;
 use App\Http\Requests\TaskValidationRequest;
-use App\Mail\AssignedTaskMail;
 use App\Models\Priority;
 use App\Models\Status;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\TaskService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Task::class, 'task');
+    }
+
     public function index(TaskService $service, QueryStringRequest $request): View
     {
         $data = $service->index($request);
@@ -28,9 +31,9 @@ class TaskController extends Controller
     public function create(): View
     {
         return view('tasks.create', ['taskDependencies' => (object) [
-            'user' => User::all(),
-            'status' => Status::all(),
-            'priority' => Priority::all()
+            'user' => Auth::user(),
+            'status' => new Status(),
+            'priority' => new Priority()
         ]]);
     }
 
