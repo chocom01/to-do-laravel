@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class TaskValidationRequest extends FormRequest
@@ -24,13 +25,13 @@ class TaskValidationRequest extends FormRequest
      */
     public function rules(): array
     {
-        $postRule = $this->method() === "POST" ? 'required' : '';
+        $requiredRule = Rule::requiredIf($this->method() === "POST");
 
         return [
-            'name' => "$postRule|max:255",
-            'user_id' => [$postRule, Rule::exists('users', 'id')],
-            'status_id' => [$postRule, Rule::exists('statuses', 'id')],
-            'priority_id' => [$postRule, Rule::exists('priorities', 'id')]
+            'name' => "$requiredRule|min:5|max:255",
+            'user_id' => [$requiredRule, Rule::in(Auth::id())],
+            'status_id' => [$requiredRule, Rule::exists('statuses', 'id')],
+            'priority_id' => [$requiredRule, Rule::exists('priorities', 'id')]
         ];
     }
 }
