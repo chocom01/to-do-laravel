@@ -17,7 +17,7 @@
                 @role('admin')
                     <x-task.selector :object="$taskDependencies" :table="'user'" :column="'user_id'"></x-task.selector>
                 @else
-                    <select disabled name="user_id">
+                    <select name="user_id">
                         <option value="{{ Auth::id() }}">{{ ucwords(Auth::user()->name) }}</option>
                     </select>
                 @endrole
