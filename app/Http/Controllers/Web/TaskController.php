@@ -16,11 +16,6 @@ use Illuminate\View\View;
 
 class TaskController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(Task::class, 'task');
-    }
-
     public function index(TaskService $service, QueryStringRequest $request): View
     {
         $data = $service->index($request);
@@ -31,7 +26,7 @@ class TaskController extends Controller
     public function create(): View
     {
         return view('tasks.create', ['taskDependencies' => (object) [
-            'user' => Auth::user(),
+            'user' => new User(),
             'status' => new Status(),
             'priority' => new Priority()
         ]]);

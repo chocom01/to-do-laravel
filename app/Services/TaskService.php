@@ -14,9 +14,12 @@ class TaskService
     public function index(QueryStringRequest $request)
     {
         $validated = $request->validated();
+        $tasks = Auth::user()->hasRole('admin')
+            ? new Task()
+            : Auth::user()->tasks();
 
         return [
-            'tasks' => Auth::user()->tasks()->filter($validated)
+            'tasks' => $tasks->filter($validated)
                 ->paginate($validated['perPage'] ?? 10)
                 ->withQueryString(),
             'perPage' => [10, 25, 50]

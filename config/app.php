@@ -175,6 +175,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Laravel-permission. Associate users with roles and permissions
+         */
+        Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*

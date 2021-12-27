@@ -26,10 +26,13 @@ class TaskValidationRequest extends FormRequest
     public function rules(): array
     {
         $requiredRule = Rule::requiredIf($this->method() === "POST");
+        $roleRule = Auth::user()->hasRole('admin')
+            ? Rule::exists('users', 'id')
+            : Rule::in(Auth::id());
 
         return [
             'name' => "$requiredRule|min:5|max:255",
-            'user_id' => [$requiredRule, Rule::in(Auth::id())],
+            'user_id' => [$requiredRule, $roleRule],
             'status_id' => [$requiredRule, Rule::exists('statuses', 'id')],
             'priority_id' => [$requiredRule, Rule::exists('priorities', 'id')]
         ];
