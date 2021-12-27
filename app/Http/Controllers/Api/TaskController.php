@@ -24,7 +24,7 @@ class TaskController extends Controller
         return (TaskResource::collection($data['tasks']))->response($data['perPage']);
     }
 
-    public function store(TaskService $service, TaskValidationRequest $request): object
+    public function store(TaskService $service, TaskValidationRequest $request): Response
     {
         $service->store($request);
 
