@@ -6,7 +6,11 @@
         <table class="table-fixed">
             <tr>
                 <x-task.th-arrow class="w-3/6" :orderBy="'name'"> Name </x-task.th-arrow>
-                <x-task.th-arrow class="w-1/6" :orderBy="'user_id'"> User </x-task.th-arrow>
+                @role('admin')
+                    <x-task.th-arrow class="w-1/6" :orderBy="'user_id'"> User </x-task.th-arrow>
+                @else
+                    <th class="w-1/6"> User </th>
+                @endrole
                 <x-task.th-arrow class="w-1/6" :orderBy="'status_id'"> Status </x-task.th-arrow>
                 <x-task.th-arrow class="w-2/6" :orderBy="'priority_id'"> Priority </x-task.th-arrow>
                 <th>Edit</th>
