@@ -6,6 +6,7 @@ use App\Http\Requests\QueryStringRequest;
 use App\Http\Requests\TaskValidationRequest;
 use App\Mail\AssignedTaskMail;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
