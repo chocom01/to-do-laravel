@@ -19,14 +19,14 @@ class TaskController extends Controller
 {
     public function index(TaskService $service, QueryStringRequest $request): JsonResponse
     {
-        $data = $service->index($request);
+        $data = $service->index($request->validated());
 
         return (TaskResource::collection($data['tasks']))->response($data['perPage']);
     }
 
-    public function store(TaskService $service, TaskValidationRequest $request): object
+    public function store(TaskService $service, TaskValidationRequest $request): Response
     {
-        $service->store($request);
+        $service->store($request->validated());
 
         return response('Task successfully created', 201);
     }
@@ -36,16 +36,16 @@ class TaskController extends Controller
         return new TaskResource($task);
     }
 
-    public function update(Task $task, TaskValidationRequest $request): Response
+    public function update(TaskService $service, Task $task, TaskValidationRequest $request): Response
     {
-        $task->update($request->validated());
+        $service->update($task, $request->validated());
 
         return response($task, 200);
     }
 
-    public function destroy(Task $task): Response
+    public function destroy(TaskService $service, Task $task): Response
     {
-        $task->delete();
+        $service->destroy($task);
 
         return response('Task was deleted', 204);
     }

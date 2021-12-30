@@ -10,23 +10,30 @@ use Illuminate\Support\Facades\Mail;
 
 class TaskService
 {
-    public function index(QueryStringRequest $request)
+    public function index($filteringParams): array
     {
-        $validated = $request->validated();
-
         return [
-            'tasks' => Task::filter($validated)
-                ->paginate($validated['perPage'] ?? 10)
+            'tasks' => Task::filter($filteringParams)
+                ->paginate($filteringParams['perPage'] ?? 10)
                 ->withQueryString(),
             'perPage' => [10, 25, 50]
         ];
     }
 
-    public function store(TaskValidationRequest $request)
+    public function store($taskParams)
     {
-        $task = new Task($request->validated());
-        $task->save();
+        $task = Task::create($taskParams);
 
         Mail::to($task->user->email)->send(new AssignedTaskMail($task));
+    }
+
+    public function update(Task $task, $taskParams): bool
+    {
+        return $task->update($taskParams);
+    }
+
+    public function destroy(Task $task): ?bool
+    {
+        return $task->delete();
     }
 }

@@ -20,7 +20,7 @@ class TaskController extends Controller
 {
     public function index(TaskService $service, QueryStringRequest $request): View
     {
-        $data = $service->index($request);
+        $data = $service->index($request->validated());
 
         return view('tasks.index', $data);
     }
@@ -36,7 +36,7 @@ class TaskController extends Controller
 
     public function store(TaskService $service, TaskValidationRequest $request): RedirectResponse
     {
-        $service->store($request);
+        $service->store($request->validated());
 
         return redirect()->home();
     }
@@ -46,16 +46,16 @@ class TaskController extends Controller
         return view('tasks.edit', ['task' => $task]);
     }
 
-    public function update(Task $task, TaskValidationRequest $request): RedirectResponse
+    public function update(TaskService $service, Task $task, TaskValidationRequest $request): RedirectResponse
     {
-        $task->update($request->validated());
+        $service->update($task, $request->validated());
 
         return back();
     }
 
-    public function destroy(Task $task): RedirectResponse
+    public function destroy(TaskService $service, Task $task): RedirectResponse
     {
-        $task->delete();
+        $service->destroy($task);
 
         return redirect()->home();
     }
