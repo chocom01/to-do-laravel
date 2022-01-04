@@ -1,29 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\QueryStringRequest;
 use App\Http\Requests\TaskValidationRequest;
+use App\Mail\AssignedTaskMail;
 use App\Models\Priority;
 use App\Models\Status;
 use App\Models\Task;
 use App\Models\User;
+use App\Services\TaskService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\Rule;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class TaskController extends Controller
 {
-    public function index(QueryStringRequest $request): View
+    public function index(TaskService $service, QueryStringRequest $request): View
     {
-        $validated = $request->validated();
+        $data = $service->index($request);
 
-        return view('tasks.index', [
-            'tasks' => Task::filter($validated)
-                ->paginate($validated['perPage'] ?? 10)
-                ->withQueryString(),
-            'perPage' => [10, 25, 50]
-        ]);
+        return view('tasks.index', $data);
     }
 
     public function create(): View
@@ -35,9 +34,9 @@ class TaskController extends Controller
         ]]);
     }
 
-    public function store(TaskValidationRequest $request): RedirectResponse
+    public function store(TaskService $service, TaskValidationRequest $request): RedirectResponse
     {
-        Task::create($request->validated());
+        $service->store($request);
 
         return redirect()->home();
     }
