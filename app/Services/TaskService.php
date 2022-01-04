@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Events\TaskCreated;
-use App\Http\Requests\QueryStringRequest;
+use App\Http\Requests\IndexTaskRequest;
 use App\Http\Requests\TaskValidationRequest;
 use App\Mail\AssignedTaskMail;
 use App\Models\Task;

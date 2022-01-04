@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\QueryStringRequest;
+use App\Http\Requests\IndexTaskRequest;
 use App\Http\Requests\TaskValidationRequest;
 use App\Http\Resources\TaskResource;
 use App\Mail\AssignedTaskMail;
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
-    public function index(TaskService $service, QueryStringRequest $request): JsonResponse
+    public function index(TaskService $service, IndexTaskRequest $request): JsonResponse
     {
         $data = $service->index($request->validated());
 

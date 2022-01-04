@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\QueryStringRequest;
+use App\Http\Requests\IndexTaskRequest;
 use App\Http\Requests\TaskValidationRequest;
 use App\Mail\AssignedTaskMail;
 use App\Models\Priority;
@@ -18,7 +18,7 @@ use Illuminate\View\View;
 
 class TaskController extends Controller
 {
-    public function index(TaskService $service, QueryStringRequest $request): View
+    public function index(TaskService $service, IndexTaskRequest $request): View
     {
         $data = $service->index($request->validated());
 
