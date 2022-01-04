@@ -1,14 +1,11 @@
 <?php
 
-use App\Http\Controllers\Web\TaskController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::resource('tasks', TaskController::class)
     ->except(['show'])
-    ->names([
-        'index' => 'home',
-        'edit' => 'edit.task'
-    ]);
+    ->names(['index' => 'home']);
 
 Route::get('/', function () {
     return redirect()->home();

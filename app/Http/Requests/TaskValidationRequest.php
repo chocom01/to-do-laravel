@@ -24,13 +24,11 @@ class TaskValidationRequest extends FormRequest
      */
     public function rules(): array
     {
-        $postRule = $this->method() === "POST" ? 'required' : '';
-
         return [
-            'name' => "$postRule|max:255",
-            'user_id' => [$postRule, Rule::exists('users', 'id')],
-            'status_id' => [$postRule, Rule::exists('statuses', 'id')],
-            'priority_id' => [$postRule, Rule::exists('priorities', 'id')]
+            'name' => 'required|max:255',
+            'user_id' => ['required', Rule::exists('users', 'id')],
+            'status_id' => ['required', Rule::exists('statuses', 'id')],
+            'priority_id' => ['required', Rule::exists('priorities', 'id')]
         ];
     }
 }

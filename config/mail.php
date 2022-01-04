@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_DRIVER', 'mailgun'),
+    'default' => env('MAIL_MAILER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,8 +51,6 @@ return [
 
         'mailgun' => [
             'transport' => 'mailgun',
-            'secret' => env('MAILGUN_SECRET'),
-            'domain' => env('MAILGUN_DOMAIN'),
         ],
 
         'postmark' => [
