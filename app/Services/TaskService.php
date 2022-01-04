@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\TaskCreated;
 use App\Http\Requests\QueryStringRequest;
 use App\Http\Requests\TaskValidationRequest;
 use App\Mail\AssignedTaskMail;
@@ -24,7 +25,7 @@ class TaskService
     {
         $task = Task::create($taskParams);
 
-        Mail::to($task->user->email)->send(new AssignedTaskMail($task));
+        event(new TaskCreated($task));
     }
 
     public function update(Task $task, $taskParams): bool
