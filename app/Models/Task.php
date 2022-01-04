@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,9 +20,9 @@ class Task extends Model
 
     protected $with = ['user', 'status', 'priority'];
 
-    public function scopeFilter(object $query, $validated)
+    public function scopeFilter(Builder $query, array $filteringParams)
     {
-        $query->orderBy($validated['orderBy'] ?? 'name', $validated['sortBy'] ?? 'asc')->orderBy('id', 'asc');
+        $query->orderBy($filteringParams['orderBy'] ?? 'name', $filteringParams['sortBy'] ?? 'asc')->orderBy('id');
     }
 
     public function user(): BelongsTo
