@@ -14,14 +14,16 @@ class TaskService
 {
     public function index(QueryStringRequest $request)
     {
-        $validated = $request->validated();
+        $validatedRequest = $request->validated();
+
         $tasks = Auth::user()->hasRole('admin')
             ? new Task()
             : Auth::user()->tasks();
 
         return [
-            'tasks' => $tasks->filter($validated)
-                ->paginate($validated['perPage'] ?? 10)
+            'tasks' => $tasks->with(['user', 'status', 'priority'])
+                ->filter($validatedRequest)
+                ->paginate($validatedRequest['perPage'] ?? 10)
                 ->withQueryString(),
             'perPage' => [10, 25, 50]
         ];
@@ -32,6 +34,6 @@ class TaskService
         $task = new Task($request->validated());
         $task->save();
 
-        Mail::to($task->user->email)->send(new AssignedTaskMail($task));
+        Mail::to($task->user->email)->queue(new AssignedTaskMail($task));
     }
 }
