@@ -28,11 +28,11 @@ class TaskController extends Controller
 
     public function create(): View
     {
-        return view('tasks.create', ['taskDependencies' => (object) [
-            'user' => new User(),
-            'status' => new Status(),
-            'priority' => new Priority()
-        ]]);
+        return view('tasks.create', [
+            'users' => User::all(),
+            'statuses' => Status::all(),
+            'priorities' => Priority::all()
+        ]);
     }
 
     public function store(TaskService $service, TaskValidationRequest $request): RedirectResponse
@@ -44,7 +44,12 @@ class TaskController extends Controller
 
     public function edit(Task $task): View
     {
-        return view('tasks.edit', ['task' => $task]);
+        return view('tasks.edit', [
+            'task' => $task,
+            'users' => User::all(),
+            'statuses' => Status::all(),
+            'priorities' => Priority::all()
+        ]);
     }
 
     public function update(Task $task, TaskValidationRequest $request): RedirectResponse

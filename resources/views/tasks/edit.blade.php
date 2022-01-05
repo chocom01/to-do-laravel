@@ -16,20 +16,20 @@
 
             <label> Assign to
                 @role('admin')
-                    <x-task.selector :object="$task" :table="'user'" :column="'user_id'"></x-task.selector>
+                    <x-task.selector :records="$users" :task="$task" :column="'user_id'"></x-task.selector>
                 @else
                     <select disabled name="user_id">
-                        <option value="{{ Auth::id() }}">{{ ucwords(Auth::user()->name) }}</option>
+                        <option value="{{ $task->user_id }}">{{ ucwords($task->user_id) }}</option>
                     </select>
                 @endrole
             </label>
 
             <label> Status
-                <x-task.selector :object="$task" :table="'status'" :column="'status_id'"></x-task.selector>
+                <x-task.selector :records="$statuses" :task="$task" :column="'status_id'"></x-task.selector>
             </label>
 
             <label> Priority
-                <x-task.selector :object="$task" :table="'priority'" :column="'priority_id'"></x-task.selector>
+                <x-task.selector :records="$priorities" :task="$task" :column="'priority_id'"></x-task.selector>
             </label>
 
             <input type="submit" value="Update">
