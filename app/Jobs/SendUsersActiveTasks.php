@@ -12,7 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class EveryHourActiveTasks implements ShouldQueue
+class SendUsersActiveTasks implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -36,11 +36,9 @@ class EveryHourActiveTasks implements ShouldQueue
      */
     public function handle()
     {
-        User::has('tasks')->chunk(100, function ($users) {
+        User::withCount('activeTasks')->chunk(100, function ($users) {
             foreach ($users as $user) {
-                $userActiveTasksCount = $user->tasks()->active()->count();
-
-                Mail::to($user->email)->send(new UserActiveTasksMail($userActiveTasksCount));
+                Mail::to($user->email)->send(new UserActiveTasksMail($user->active_tasks_count));
             }
         });
     }
