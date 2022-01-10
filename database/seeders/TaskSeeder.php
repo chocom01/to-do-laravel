@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Priority;
+use App\Models\Status;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class TaskSeeder extends Seeder
@@ -14,28 +17,17 @@ class TaskSeeder extends Seeder
      */
     public function run()
     {
-        Task::factory()->count(14)->create([
-            'user_id' => 2,
-            'status_id' => 2,
-            'priority_id' => 2
-        ]);
+        for ($counter = 1; $counter <= 7; $counter++) {
+            Task::factory()->count(7)->create($this->randomDependencies());
+        }
+    }
 
-        Task::factory()->count(14)->create([
-            'user_id' => 1,
-            'status_id' => 1,
-            'priority_id' => 1
-        ]);
-
-        Task::factory()->count(14)->create([
-            'user_id' => 2,
-            'status_id' => 3,
-            'priority_id' => 3
-        ]);
-
-        Task::factory()->count(14)->create([
-            'user_id' => 1,
-            'status_id' => 1,
-            'priority_id' => 2
-        ]);
+    private function randomDependencies(): array
+    {
+        return [
+            'user_id' => User::query()->inRandomOrder()->first()->getKey(),
+            'status_id' => Status::query()->inRandomOrder()->first()->getKey(),
+            'priority_id' => Priority::query()->inRandomOrder()->first()->getKey()
+        ];
     }
 }

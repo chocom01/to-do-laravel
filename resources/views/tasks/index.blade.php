@@ -1,6 +1,4 @@
 <x-layout>
-    <link href="{{ asset('/css/tasks.index.css') }}" rel="stylesheet">
-
     <div class="mx-72 p-7">
         <p class="text-3xl mt-3 mb-6 flex justify-center"> Tasks </p>
         <table class="table-fixed">
