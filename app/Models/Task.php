@@ -33,9 +33,9 @@ class Task extends Model
         return $this->belongsTo(Priority::class);
     }
 
-    public function scopeFilter(object $query, array $validated)
+    public function scopeFilter(Builder $query, array $filteringParams)
     {
-        $query->orderBy($validated['orderBy'] ?? 'name', $validated['sortBy'] ?? 'asc')->orderBy('id', 'asc');
+        $query->orderBy($filteringParams['orderBy'] ?? 'name', $filteringParams['sortBy'] ?? 'asc')->orderBy('id');
     }
 
     /**
