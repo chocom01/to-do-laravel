@@ -7,14 +7,21 @@ use App\Http\Requests\IndexTaskRequest;
 use App\Http\Requests\TaskValidationRequest;
 use App\Mail\AssignedTaskMail;
 use App\Models\Task;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class TaskService
 {
     public function index($filteringParams): array
     {
+        $tasks = Auth::user()->hasRole('admin')
+            ? new Task()
+            : Auth::user()->tasks();
+
         return [
-            'tasks' => Task::filter($filteringParams)
+            'tasks' => $tasks->with(['user', 'status', 'priority'])
+                ->filter($filteringParams)
                 ->paginate($filteringParams['perPage'] ?? 10)
                 ->withQueryString(),
             'perPage' => [10, 25, 50]

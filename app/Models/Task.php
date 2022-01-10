@@ -18,13 +18,6 @@ class Task extends Model
         'priority_id'
     ];
 
-    protected $with = ['user', 'status', 'priority'];
-
-    public function scopeFilter(Builder $query, array $filteringParams)
-    {
-        $query->orderBy($filteringParams['orderBy'] ?? 'name', $filteringParams['sortBy'] ?? 'asc')->orderBy('id');
-    }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -38,5 +31,18 @@ class Task extends Model
     public function priority(): BelongsTo
     {
         return $this->belongsTo(Priority::class);
+    }
+
+    public function scopeFilter(Builder $query, array $filteringParams)
+    {
+        $query->orderBy($filteringParams['orderBy'] ?? 'name', $filteringParams['sortBy'] ?? 'asc')->orderBy('id');
+    }
+
+    /**
+     * Scope where status_id equal id: 1(Assigned), 2(In progress), but not 3(Done).
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereIn('status_id', [1,2]);
     }
 }
