@@ -15,7 +15,7 @@ Route::group(['middleware' => ['auth']], function () {
     })->name('dashboard');
 
     Route::get('/', function () {
-        return redirect()->home();
+        return redirect()->route('tasks.index');
     });
 });
 
