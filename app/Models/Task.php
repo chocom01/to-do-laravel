@@ -38,10 +38,7 @@ class Task extends Model
     }
 
     /**
-     * Scope where status_id equal id:
-     * 1 = Assigned,
-     * 2 = In progress,
-     * but not 3 = Done.
+     * Scope where status_id equal id: 1(Assigned), 2(In progress), but not 3(Done).
      */
     public function scopeActive($query)
     {
