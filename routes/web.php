@@ -5,11 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('tasks', TaskController::class)
-        ->except(['show', 'destroy'])
-        ->names([
-            'index' => 'home',
-            'edit' => 'edit.task'
-        ]);
+        ->except(['show', 'destroy']);
 
     Route::delete('tasks/{task}', [TaskController::class, 'destroy'])
         ->middleware('permission:deleteTask');

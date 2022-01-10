@@ -33,7 +33,7 @@ class AssignedTaskMail extends Mailable
     public function build()
     {
         $this->details = [
-            'taskUrl' => route('edit.task', ['task' => $this->task])
+            'taskUrl' => route('tasks.edit', ['task' => $this->task])
         ];
 
         return $this->subject('Assigned task notification')

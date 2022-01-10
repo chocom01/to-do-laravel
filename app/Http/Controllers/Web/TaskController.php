@@ -39,7 +39,7 @@ class TaskController extends Controller
     {
         $service->store($request->validated());
 
-        return redirect()->home();
+        return redirect()->route('tasks.index');
     }
 
     public function edit(Task $task): View
@@ -63,6 +63,6 @@ class TaskController extends Controller
     {
         $service->destroy($task);
 
-        return redirect()->home();
+        return redirect()->route('tasks.index');
     }
 }
