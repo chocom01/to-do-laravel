@@ -28,6 +28,6 @@ class SendTaskCreatedEmail
      */
     public function handle(TaskCreated $event)
     {
-        Mail::to($event->task->user->email)->send(new AssignedTaskMail($event->task));
+        Mail::to($event->task->user->email)->queue(new AssignedTaskMail($event->task));
     }
 }
