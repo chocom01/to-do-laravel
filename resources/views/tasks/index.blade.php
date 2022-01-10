@@ -1,8 +1,4 @@
 <x-layout>
-    <style>
-        <?php include '../resources/css/tasks.index.css'; ?>
-    </style>
-
     <div class="mx-72 p-7">
         <p class="text-3xl mt-3 mb-6 flex justify-center"> Tasks </p>
         <table class="table-fixed">
@@ -19,7 +15,7 @@
                     <td> {{ $task->user->name }} </td>
                     <td> {{ $task->status->name }} </td>
                     <td> {{ $task->priority->name }} </td>
-                    <td> <a class="button" href="/tasks/{{ $task->id }}"> Edit </a> </td>
+                    <td> <a class="button" href="/tasks/{{ $task->id }}/edit"> Edit </a> </td>
                 </tr>
             @endforeach
         </table>
