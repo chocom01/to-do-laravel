@@ -37,9 +37,9 @@ class SendUsersActiveTasks implements ShouldQueue
     public function handle()
     {
         User::withCount('activeTasks')->chunk(100, function ($users) {
-            foreach ($users as $user) {
+            $users->map(function ($user) {
                 Mail::to($user->email)->queue(new UserActiveTasksMail($user->active_tasks_count));
-            }
+            });
         });
     }
 }
