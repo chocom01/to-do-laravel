@@ -1,0 +1,78 @@
+table, th, td {
+    border: 1px solid silver;
+    border-bottom: 1px solid #ddd;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 10px 20px;
+}
+
+.sortDown:after,
+.sortUp:after{
+    content: ' ';
+    border: 7px solid transparent;
+}
+
+.passive:after{
+    content: ' ';
+    position: relative;
+    left: 10px;
+    border: 7px solid transparent;
+    bottom: 15px;
+    border-bottom-color: silver;
+}
+
+.sortDown:after{
+    margin-bottom: -10px;
+    border-top-color: rgba(5,150,105);
+}
+
+.sortUp:after{
+    margin-top: -10px;
+    border-bottom-color: rgba(5,150,105);
+}
+
+.sortDown,
+.sortUp{
+    flex-direction: row-reverse;
+    display: flex;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination a.active {
+    background-color: rgba(5,150,105);
+    color: white;
+    border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+.button {
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    width:100%;
+    background-color: white;
+    color: black;
+}
+
+.button:hover {
+    background-color: rgba(5,150,105);
+    color: white;
+}
+
+tr:hover {background-color: #cbcbcb;}
